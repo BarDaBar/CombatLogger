@@ -18,6 +18,7 @@ use pocketmine\scheduler\PluginTask;
 class Main extends PluginBase implements Listener{
 
     private $players = array();
+
     public $tasks = array();
     public $interval = 10;
 
@@ -89,6 +90,9 @@ class Main extends PluginBase implements Listener{
             $player = $event->getPlayer();
             if((time() - $this->players[$player->getName()]) < $this->interval){
                 $player->kill();
+                if($player->getInventory() instanceof PlayerInventory) {
+                    $player->getInventory()->clearALL();
+                }
             }
             unset($this->players[$player->getName()]);
             if(isset($this->tasks[$player->getName()])) $this->getServer()->getScheduler()->cancelTask($this->tasks[$player->getName()]);unset($this->tasks[$player->getName()]);
