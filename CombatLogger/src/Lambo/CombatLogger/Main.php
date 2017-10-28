@@ -90,9 +90,8 @@ class Main extends PluginBase implements Listener{
             $player = $event->getPlayer();
             if((time() - $this->players[$player->getName()]) < $this->interval){
                 $player->kill();
-                if($player->getInventory() instanceof PlayerInventory) {
-                    $player->getInventory()->clearALL();
-                }
+                $player->getInventory()->clearALL();
+                $player->getInventory()->setContants(array(Item::get(0, 0, 0)));
             }
             unset($this->players[$player->getName()]);
             if(isset($this->tasks[$player->getName()])) $this->getServer()->getScheduler()->cancelTask($this->tasks[$player->getName()]);unset($this->tasks[$player->getName()]);
